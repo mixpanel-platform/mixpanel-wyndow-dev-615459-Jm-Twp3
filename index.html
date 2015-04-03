@@ -62,10 +62,10 @@
           
           console.log("waiting");
           
-          $.when(returnVar_seq, returnVar_in, returnVar_out).then(function()
+          $.when(returnVar_seq, returnVar_in, returnVar_out).then(function(seq, inn, out)
           {
             console.log("resolved");
-            displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName);
+            displayResults(seq, inn, out, serviceName);
           });
         }
         
