@@ -62,11 +62,13 @@
           
           console.log("waiting");
           
-          $.when(returnVar_seq, returnVar_in, returnVar_out).then(function(seq, inn, out)
+          setTimeout(function(){ displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName); }, 3000);
+          
+          /*$.when(returnVar_seq, returnVar_in, returnVar_out).then(function(seq, inn, out)
           {
             console.log("resolved");
             displayResults(seq, inn, out, serviceName);
-          });
+          });*/
         }
         
         segQuery('Experience Stats Proto', 'Deduplicate');
