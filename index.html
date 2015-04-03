@@ -18,27 +18,35 @@
         }
         
         var segQuery = function(event, serviceName){
+          var returnVar_seq = returnVar_seq(event, serviceName, params);
+          var returnVar_in = returnVar_in(event, serviceName, params);
+          var returnVar_out = returnVar_out(event, serviceName, params);
+          displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName);
+        }
+        
+        var returnVar_seq = function(event, serviceName, params){
           MP.api.segment(event, 'serviceDisplayOrder', params).done(function(results) {
             var data = results.values();
             var keys = Object.keys(data);
             var returnVar_seq = keys[0];
             console.log(returnVar_seq);
           });
-          
+          return returnVar_seq;
+        }
+        
+        var returnVar_in = function(event, serviceName, params){
           params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "In")';
           MP.api.segment(event, 'direction', params).done(function(results) {
             var returnVar_in = calculateResults(results.values(), 'In');
             console.log(returnVar_in);
           });
-          
+        }
+        
+        var returnVar_out = function(event, serviceName, params){
           params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "Out")';
           MP.api.segment(event, 'direction', params).done(function(results) {
             var returnVar_out = calculateResults(results.values(), 'Out');
             console.log(returnVar_out);
-          });
-          
-          $.when(returnVar_seq, returnVar_in, returnVar_out).done(function(){
-            displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName);
           });
         }
         
