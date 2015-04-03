@@ -62,6 +62,7 @@
           
           $.when(returnVar_seq, returnVar_in, returnVar_out).done(function()
           {
+            console.log("resolved");
             displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName);
           });
         }
