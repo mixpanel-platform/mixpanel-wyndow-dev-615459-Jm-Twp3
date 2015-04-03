@@ -67,15 +67,9 @@
           var vSeq = returnVar_seq(event, serviceName, params);
           var vIn = returnVar_in(event, serviceName, params);
           var vOut = returnVar_out(event, serviceName, params);
-          if(typeof vSeq !== "undefined"){
-            console.log("entered");
+          setTimeout(function(){
             displayResults(vSeq, vIn, vOut, serviceName);
-          }
-          else{
-            setTimeout(function(){
-              displayResults(vSeq, vIn, vOut, serviceName);
-            },5000);
-          }
+          },5000);
         }
         
         segQuery('Experience Stats Proto', 'Deduplicate');
