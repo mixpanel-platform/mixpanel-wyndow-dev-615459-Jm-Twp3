@@ -10,16 +10,44 @@
     <script>
       MP.api.ready(function() {
         
-        var segQuery = function(event, property){
-          MP.api.segment(event,  property, {from: '2015-03-01', to: moment(), unit: 'day'}).done(function(results) {
-            console.log(results.values());
-          });
+        params = {
+          from: '2015-03-01',
+          to: moment(),
+          unit: 'day',
+          where: '(properties["serviceName"] == "Deduplicate")'
         }
         
-        segQuery('Experience Stats Proto', 'serviceName');
+        var segQuery = function(event, property, result){
+          params['where'] = '(properties["serviceName"] == "' + result + '")';
+          console.log(params);
+          MP.api.segment(event,  property, {from: '2015-03-01', to: moment(), unit: 'day'}).done(function(results) {
+            var returnVar = calculateResults(results.values(), result);
+          });
+          return returnVar;
+        }
+        
+        var calculateResults = function(data, result){
+          var keys = Object.keys(data[result]);
+          var total = 0;
+          for(i=0; i<keys.length; i++){
+            total += data[result][keys[i]];
+          }
+          return total;
+        }
         
       });
-      // Run queries and display results here
     </script>
+    <table>
+      <tr>
+        <td>Service Name</td>
+        <td>Service Sequence</td>
+        <td>Total Events In</td>
+        <td>Total Events Out</td>
+      </tr>
+      <tr>
+        <td>Deduplicate</td>
+        <td><script>segQuery('Experience Stats Proto', 'serviceDisplayOrder', 'Deduplicate')</script></td>
+      </tr>
+    </table>
   </body>
 </html>
