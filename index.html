@@ -64,16 +64,28 @@
         }
         
         var segQuery = function(event, serviceName){
-          var vSeq = $.Deferred();
-          var vIn = $.Deferred();
-          var vOut = $.Deferred();
-          vSeq.resolve(returnVar_seq(event, serviceName, params));
-          vIn.resolve(returnVar_in(event, serviceName, params));
-          vOut.resolve(returnVar_out(event, serviceName, params));
-          $.when(vSeq, vIn, vOut).then(function(){
+          var vSeq = returnVar_seq(event, serviceName, params);
+          var vIn = returnVar_in(event, serviceName, params);
+          var vOut = returnVar_out(event, serviceName, params);
+          if(typeof vSeq !== "undefined" && typeof vIn !== "undefined" && typeof vOut !== "undefined"){
             displayResults(vSeq, vIn, vOut, serviceName);
-          });
+          }
+          else{
+            setTimeout(function(){
+            displayResults(vSeq, vIn, vOut, serviceName);
+          },5000);
         }
+        
+        function waitForElement(){
+          if(typeof someVariable !== "undefined"){
+            //variable exists, do what you want
+          }
+          else{
+            setTimeout(function(){
+            waitForElement();
+          },250);
+    }
+}
         
         segQuery('Experience Stats Proto', 'Deduplicate');
       });
