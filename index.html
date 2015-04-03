@@ -17,34 +17,6 @@
           where: '(properties["serviceName"] == "Deduplicate")'
         }
         
-        var returnVar_seq = function(event, serviceName, params){
-          MP.api.segment(event, 'serviceDisplayOrder', params).done(function(results) {
-            var data = results.values();
-            var keys = Object.keys(data);
-            var returnVar_seq = keys[0];
-            console.log(returnVar_seq);
-          });
-          return returnVar_seq;
-        }
-        
-        var returnVar_in = function(event, serviceName, params){
-          params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "In")';
-          MP.api.segment(event, 'direction', params).done(function(results) {
-            var returnVar_in = calculateResults(results.values(), 'In');
-            console.log(returnVar_in);
-          });
-          return returnVar_in;
-        }
-        
-        var returnVar_out = function(event, serviceName, params){
-          params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "Out")';
-          MP.api.segment(event, 'direction', params).done(function(results) {
-            var returnVar_out = calculateResults(results.values(), 'Out');
-            console.log(returnVar_out);
-          });
-          return returnVar_out;
-        }
-        
         var calculateResults = function(data, result){
           var keys = Object.keys(data[result]);
           var total = 0;
@@ -65,12 +37,33 @@
         }
         
         var segQuery = function(event, serviceName){
-          var vSeq = returnVar_seq(event, serviceName, params);
-          var vIn = returnVar_in(event, serviceName, params);
-          var vOut = returnVar_out(event, serviceName, params);
-          setTimeout(function(){
-            displayResults(vSeq, vIn, vOut, serviceName);
-          },5000);
+          var returnVar_seq = $.Deferred();
+          var returnVar_in = $.Deferred();
+          var returnVar_out = $.Deferred();
+          
+          MP.api.segment(event, 'serviceDisplayOrder', params).done(function(results) {
+            var data = results.values();
+            var keys = Object.keys(data);
+            returnVar_seq = keys[0];
+            console.log(returnVar_seq);
+          });
+          
+          params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "In")';
+          MP.api.segment(event, 'direction', params).done(function(results) {
+            returnVar_in = calculateResults(results.values(), 'In');
+            console.log(returnVar_in);
+          });
+          
+          params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "Out")';
+          MP.api.segment(event, 'direction', params).done(function(results) {
+            returnVar_out = calculateResults(results.values(), 'Out');
+            console.log(returnVar_out);
+          });
+          
+          $.when(returnVar_seq, returnVar_in, returnVar_out).done(function()
+          {
+            displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName);
+          });
         }
         
         segQuery('Experience Stats Proto', 'Deduplicate');
