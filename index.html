@@ -67,7 +67,7 @@
           var vSeq = returnVar_seq(event, serviceName, params);
           var vIn = returnVar_in(event, serviceName, params);
           var vOut = returnVar_out(event, serviceName, params);
-          if(typeof vSeq !== "undefined" && typeof vIn !== "undefined" && typeof vOut !== "undefined"){
+          if(typeof vSeq !== "undefined"){
             displayResults(vSeq, vIn, vOut, serviceName);
           }
           else{
