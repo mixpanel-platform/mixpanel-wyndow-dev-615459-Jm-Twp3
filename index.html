@@ -67,7 +67,7 @@
           var vSeq = $.Deferred();
           var vIn = $.Deferred();
           var vOut = $.Deferred();
-          $.when(vSeq, vIn, vOut).done(function(){
+          $.when(vSeq, vIn, vOut).then(function(){
             displayResults(vSeq, vIn, vOut, serviceName);
           });
           vSeq.resolve(returnVar_seq(event, serviceName, params));
