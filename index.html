@@ -21,7 +21,8 @@
           var theDiv_seq = document.getElementById(serviceName + '_Seq');
           MP.api.segment(event, 'serviceDisplayOrder', params).done(function(results) {
             var data = results.values();
-            var keys = Object.keys(data[result]);
+            var keys = Object.keys(data[serviceName]);
+            consolelog(keys);
             var returnVar_seq = data[keys[0]];
           });
           
