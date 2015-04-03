@@ -22,8 +22,8 @@
           MP.api.segment(event, 'serviceDisplayOrder', params).done(function(results) {
             var data = results.values();
             var keys = Object.keys(data);
-            console.log(keys);
             var returnVar_seq = data[keys[0]];
+            console.log(returnVar_seq);
           });
           
           var theDiv_in = document.getElementById(serviceName + '_In');
@@ -31,10 +31,12 @@
           params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "In")';
           MP.api.segment(event, 'direction', params).done(function(results) {
             var returnVar_in = calculateResults(results.values(), 'In');
+            console.log(returnVar_in);
           });
           params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "Out")';
           MP.api.segment(event, 'direction', params).done(function(results) {
             var returnVar_out = calculateResults(results.values(), 'Out');
+            console.log(returnVar_out);
           });
           
           theDiv_seq.appendChild(returnVar_seq);
