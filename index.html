@@ -37,6 +37,10 @@
         }
         
         var segQuery = function(event, serviceName){
+          var returnVar_seq = $.Deferred();
+          var returnVar_in = $.Deferred();
+          var returnVar_out = $.Deferred();
+          
           MP.api.segment(event, 'serviceDisplayOrder', params).done(function(results) {
             var data = results.values();
             var keys = Object.keys(data);
@@ -58,7 +62,7 @@
           
           console.log("waiting");
           
-          $.when(returnVar_seq, returnVar_in, returnVar_out).done(function()
+          $.when(returnVar_seq, returnVar_in, returnVar_out).then(function()
           {
             console.log("resolved");
             displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName);
