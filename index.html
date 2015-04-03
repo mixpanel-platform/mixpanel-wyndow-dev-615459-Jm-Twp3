@@ -37,7 +37,9 @@
             console.log(returnVar_out);
           });
           
-          displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName)
+          $.when(returnVar_seq, returnVar_in, returnVar_out).done(function(){
+            displayResults(returnVar_seq, returnVar_in, returnVar_out, serviceName);
+          }
         }
         
         var calculateResults = function(data, result){
