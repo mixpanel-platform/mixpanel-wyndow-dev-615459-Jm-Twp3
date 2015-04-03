@@ -24,7 +24,7 @@
             var returnVar_seq = keys[0];
             console.log(returnVar_seq);
           });
-          return returnVar_seq;
+          returnVar_in(event, serviceName, params, seq);
         }
         
         var returnVar_in = function(event, serviceName, params){
@@ -33,7 +33,7 @@
             var returnVar_in = calculateResults(results.values(), 'In');
             console.log(returnVar_in);
           });
-          return returnVar_in;
+          returnVar_out(event, serviceName, params, seq, inn);
         }
         
         var returnVar_out = function(event, serviceName, params){
@@ -42,7 +42,7 @@
             var returnVar_out = calculateResults(results.values(), 'Out');
             console.log(returnVar_out);
           });
-          return returnVar_out;
+          displayResults(seq, inn, out, serviceName);
         }
         
         var calculateResults = function(data, result){
@@ -63,13 +63,7 @@
           theDiv_out.appendChild(out);
         }
         
-        var segQuery = function(event, serviceName){
-          $.when(returnVar_seq(event, serviceName, params), returnVar_in(event, serviceName, params), returnVar_out(event, serviceName, params)).then(function(){
-            displayResults(returnVar_seq, returnVar_in, returnVar_out);
-          });
-        }
-        
-        segQuery('Experience Stats Proto', 'Deduplicate');
+        returnVar_seq('Experience Stats Proto', 'Deduplicate', params);
       });
     </script>
     <table>
