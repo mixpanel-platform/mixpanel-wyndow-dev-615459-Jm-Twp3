@@ -20,17 +20,18 @@
         var segQuery = function(event, serviceName){
           var theDiv_seq = document.getElementById(serviceName + '_Seq');
           MP.api.segment(event, 'serviceDisplayOrder', params).done(function(results) {
+            var data = results.values();
             var keys = Object.keys(data[result]);
             var returnVar_seq = data[keys[0]];
           });
           
           var theDiv_in = document.getElementById(serviceName + '_In');
           var theDiv_out = document.getElementById(serviceName + '_Out');
-          params[where] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "In")';
+          params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "In")';
           MP.api.segment(event, 'direction', params).done(function(results) {
             var returnVar_in = calculateResults(results.values(), 'In');
           });
-          params[where] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "Out")';
+          params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "Out")';
           MP.api.segment(event, 'direction', params).done(function(results) {
             var returnVar_out = calculateResults(results.values(), 'Out');
           });
