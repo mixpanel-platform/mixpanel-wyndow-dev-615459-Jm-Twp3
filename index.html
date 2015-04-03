@@ -17,13 +17,29 @@
           where: '(properties["serviceName"] == "Deduplicate")'
         }
         
-        var segQuery = function(event, property, result){
-          params['where'] = '(properties["serviceName"] == "' + result + '")';
-          console.log(params);
-          MP.api.segment(event,  property, {from: '2015-03-01', to: moment(), unit: 'day'}).done(function(results) {
-            var returnVar = calculateResults(results.values(), result);
+        var segQuery = function(event, serviceName){
+          var event = 'Experience Stats Proto';
+          
+          var theDiv_seq = document.getElementById(serviceName + '_Seq');
+          MP.api.segment(event, 'serviceDisplayOrder', params).done(function(results) {
+            var keys = Object.keys(data[result]);
+            var returnVar_seq = data[keys[0]];
           });
-          return returnVar;
+          
+          var theDiv_in = document.getElementById(serviceName + '_In');
+          var theDiv_out = = document.getElementById(serviceName + '_Out');
+          params[where] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "In")';
+          MP.api.segment(event, 'direction', params).done(function(results) {
+            var returnVar_in = calculateResults(results.values(), 'In');
+          });
+          params[where] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "Out")';
+          MP.api.segment(event, 'direction', params).done(function(results) {
+            var returnVar_out = calculateResults(results.values(), 'Out');
+          });
+          
+          theDiv_seq.appendChild(returnVar_seq);
+          theDiv_in.appendChild(returnVar_in);
+          theDiv_out.appendChild(returnVar_out);
         }
         
         var calculateResults = function(data, result){
@@ -34,7 +50,6 @@
           }
           return total;
         }
-        
       });
     </script>
     <table>
@@ -46,7 +61,9 @@
       </tr>
       <tr>
         <td>Deduplicate</td>
-        <td><script>segQuery('Experience Stats Proto', 'serviceDisplayOrder', 'Deduplicate')</script></td>
+        <td id='Deduplicate_Seq'></td>
+        <td id='Deduplicate_In'></td>
+        <td id='Deduplicate_Out'></td>
       </tr>
     </table>
   </body>
