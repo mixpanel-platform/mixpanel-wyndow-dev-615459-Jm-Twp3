@@ -33,6 +33,7 @@
             var returnVar_in = calculateResults(results.values(), 'In');
             console.log(returnVar_in);
           });
+          return returnVar_in;
         }
         
         var returnVar_out = function(event, serviceName, params){
@@ -41,6 +42,7 @@
             var returnVar_out = calculateResults(results.values(), 'Out');
             console.log(returnVar_out);
           });
+          return returnVar_out;
         }
         
         var calculateResults = function(data, result){
