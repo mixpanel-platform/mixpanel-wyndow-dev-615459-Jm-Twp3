@@ -36,7 +36,8 @@
           theDiv_out.innerHTML = out;
         }
         
-        var segQuery = function(event, serviceName){
+        var segQuery = function(serviceName){
+          var event = 'Experience Stats Proto';
           var returnVar_seq = $.Deferred();
           var returnVar_in = $.Deferred();
           var returnVar_out = $.Deferred();
@@ -48,13 +49,13 @@
             console.log(returnVar_seq);
           });
           
-          params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "In")';
+          params['where'] = '(properties["serviceName"] == "'+serviceName+'") and (properties["direction"] == "In")';
           MP.api.segment(event, 'direction', params).done(function(results) {
             returnVar_in = calculateResults(results.values(), 'In');
             console.log(returnVar_in);
           });
           
-          params['where'] = '(properties["serviceName"] == "Deduplicate") and (properties["direction"] == "Out")';
+          params['where'] = '(properties["serviceName"] == "'+serviceName+'") and (properties["direction"] == "Out")';
           MP.api.segment(event, 'direction', params).done(function(results) {
             returnVar_out = calculateResults(results.values(), 'Out');
             console.log(returnVar_out);
@@ -71,7 +72,7 @@
           });*/
         }
         
-        segQuery('Experience Stats Proto', 'Deduplicate');
+        segQuery('Deduplicate');
       });
     </script>
     <table>
