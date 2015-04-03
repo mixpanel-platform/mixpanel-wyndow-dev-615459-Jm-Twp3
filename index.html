@@ -64,12 +64,15 @@
         }
         
         var segQuery = function(event, serviceName){
-          var vSeq = returnVar_seq(event, serviceName, params);
-          var vIn = returnVar_in(event, serviceName, params);
-          var vOut = returnVar_out(event, serviceName, params);
-          $.when(returnVar_seq(event, serviceName, params), returnVar_in(event, serviceName, params), returnVar_out(event, serviceName, params)).done(function(){
+          var vSeq = $.Deferred();
+          var vIn = $.Deferred();
+          var vOut = $.Deferred();
+          $.when(vSeq, vIn, vOut).done(function(){
             displayResults(vSeq, vIn, vOut, serviceName);
           });
+          vSeq.resolve(returnVar_seq(event, serviceName, params));
+          vIn.resolve(returnVar_in(event, serviceName, params));
+          vOut.resolve(returnVar_out(event, serviceName, params));
         }
         
         segQuery('Experience Stats Proto', 'Deduplicate');
