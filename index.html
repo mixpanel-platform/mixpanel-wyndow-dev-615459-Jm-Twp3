@@ -24,7 +24,9 @@
             var returnVar_seq = keys[0];
             console.log(returnVar_seq);
           });
-          returnVar_in(event, serviceName, params, seq);
+          $.when(returnVar_seq).done(function(){
+            returnVar_in(event, serviceName, params, seq);
+          });
         }
         
         var returnVar_in = function(event, serviceName, params){
