@@ -10,13 +10,13 @@
     <script>
       MP.api.ready(function() {
         
-        segQuery('Experience Stats Proto', 'serviceName');
-        
         var segQuery = function(event, property){
           MP.api.segment(event,  property, {from: '2015-03-01', to: moment(), unit: 'day'}).done(function(results) {
             console.log(results.values());
           });
         }
+        
+        segQuery('Experience Stats Proto', 'serviceName');
         
       });
       // Run queries and display results here
