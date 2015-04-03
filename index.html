@@ -68,6 +68,7 @@
           var vIn = returnVar_in(event, serviceName, params);
           var vOut = returnVar_out(event, serviceName, params);
           if(typeof vSeq !== "undefined"){
+            console.log("entered");
             displayResults(vSeq, vIn, vOut, serviceName);
           }
           else{
