@@ -67,7 +67,9 @@
           var vSeq = returnVar_seq(event, serviceName, params);
           var vIn = returnVar_in(event, serviceName, params);
           var vOut = returnVar_out(event, serviceName, params);
-          displayResults(vSeq, vIn, vOut, serviceName);
+          $.when(typeof vSeq != undefined && typeof vIn != undefined && typeof vOut != undefined){
+            displayResults(vSeq, vIn, vOut, serviceName);
+          }
         }
         
         segQuery('Experience Stats Proto', 'Deduplicate');
