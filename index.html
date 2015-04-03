@@ -7,8 +7,18 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
     <script>
+      MP.api.ready(function() {
+        
+        segQuery('Experience Stats Proto', 'serviceName');
+        
+        var segQuery = function(event, property){
+          MP.api.segment(event,  property, {from: '2015-03-01', to: moment(), unit: 'day'}).done(function(results) {
+            console.log(results.values());
+          });
+        }
+        
+      });
       // Run queries and display results here
     </script>
   </body>
