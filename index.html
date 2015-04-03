@@ -58,9 +58,9 @@
           var theDiv_seq = document.getElementById(serviceName + '_Seq');
           var theDiv_in = document.getElementById(serviceName + '_In');
           var theDiv_out = document.getElementById(serviceName + '_Out');
-          theDiv_seq.innerHTML = seq;
-          theDiv_in.innerHTML = inn;
-          theDiv_out.innerHTML = out;
+          theDiv_seq.innerHTML = seq.value();
+          theDiv_in.innerHTML = inn.value();
+          theDiv_out.innerHTML = out.value();
         }
         
         var segQuery = function(event, serviceName){
