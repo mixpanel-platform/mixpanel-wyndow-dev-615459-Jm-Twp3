@@ -60,6 +60,8 @@
             console.log(returnVar_out);
           });
           
+          console.log("waiting");
+          
           $.when(returnVar_seq, returnVar_in, returnVar_out).done(function()
           {
             console.log("resolved");
